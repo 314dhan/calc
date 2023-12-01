@@ -7,74 +7,6 @@
         var operator = null;
         var decimal = false;
 
-        function deleteLastCharacter() {
-            // Mendapatkan nilai display saat ini
-            var displayValue = display.innerHTML;
-            // Jika display tidak kosong atau 0, hapus karakter terakhir
-            if (displayValue != "" && displayValue != "0") {
-                // Menghapus karakter terakhir dengan menggunakan slice
-                displayValue = displayValue.slice(0, -1);
-                // Jika display menjadi kosong setelah menghapus, ganti dengan 0
-                if (displayValue == "") {
-                    displayValue = "0";
-                }
-                // Menampilkan nilai baru di display
-                display.innerHTML = displayValue;
-            }
-        }
-
-        // Menambahkan event listener untuk keyboard input
-    document.addEventListener("keydown", function(event) {
-    // Mendapatkan tombol yang ditekan
-    var key = event.key;
-    // Melakukan aksi sesuai tombol yang ditekan
-    switch (key) {
-        case "0":
-        case "1":
-        case "2":
-        case "3":
-        case "4":
-        case "5":
-        case "6":
-        case "7":
-        case "8":
-        case "9":
-            // Jika tombol angka, panggil fungsi inputNumber dengan parameter angka yang ditekan
-            inputNumber(parseInt(key));
-            break;
-        case "+":
-        case "-":
-        case "*":
-        case "/":
-            // Jika tombol operator, panggil fungsi inputOperator dengan parameter operator yang ditekan
-            inputOperator(key);
-            break;
-        case ".":
-            // Jika tombol titik, panggil fungsi inputDecimal
-            inputDecimal();
-            break;
-        case "=":
-        case "Enter":
-            // Jika tombol sama dengan atau enter, panggil fungsi calculate
-            calculate();
-            break;
-        case "c":
-        case "C":
-            clearDisplay();
-        case "Backspace":
-            // Jika tombol backspace, panggil fungsi deleteLastCharacter
-            deleteLastCharacter();
-            break;
-        case "Delete":
-            // Jika tombol c, C, backspace, atau delete, panggil fungsi clearDisplay
-            clearDisplay();
-            break;
-        default:
-            // Jika tombol lain, tidak melakukan apa-apa
-            break;
-    }
-});
-
         // Fungsi untuk memasukkan angka ke display
         function inputNumber(number) {
             // Jika display masih 0, ganti dengan angka yang dimasukkan
@@ -165,7 +97,6 @@
 
         // Fungsi untuk mengosongkan display
         function clearDisplay() {
-            resetButtonColor();
             // Mengosongkan display
             display.innerHTML = "0";
             // Mengosongkan angka pertama dan operator
@@ -174,7 +105,26 @@
             // Setel status desimal menjadi false
             decimal = false;
             // Mengembalikan warna tombol yang sudah ditekan ke warna normal
-            
+            resetButtonColor();
+        }
+
+        // Fungsi untuk menghapus karakter terakhir dari display
+        function deleteLastCharacter() {
+            // Mendapatkan nilai display saat ini
+            var displayValue = display.innerHTML;
+            // Jika display tidak kosong atau 0, hapus karakter terakhir
+            if (displayValue != "" && displayValue != "0") {
+                // Menghapus karakter terakhir dengan menggunakan slice
+                displayValue = displayValue.slice(0, -1);
+                // Jika display menjadi kosong setelah menghapus, ganti dengan 0
+                if (displayValue == "") {
+                    displayValue = "0";
+                }
+                // Menampilkan nilai baru di display
+                display.innerHTML = displayValue;
+            }
+            // Mengembalikan warna tombol yang sudah ditekan ke warna normal
+            resetButtonColor();
         }
 
         // Fungsi untuk mengembalikan warna tombol yang sudah ditekan ke warna normal
@@ -183,7 +133,59 @@
             var buttonElements = buttons.getElementsByTagName("button");
             // Melakukan iterasi untuk setiap tombol
             for (var i = 0; i < buttonElements.length; i++) {
-                // Menghapus kelas active yang membuat warna tombol menjadi gelap
-                buttonElements[i].classList.remove("active");
+        //                // Menghapus kelas active yang membuat warna tombol menjadi gelap
+                    buttonElements[i].classList.remove("active");
+                }
             }
-        }
+
+            // Menambahkan event listener untuk keyboard input
+            document.addEventListener("keydown", function (event) {
+                // Mendapatkan tombol yang ditekan
+                var key = event.key;
+                // Melakukan aksi sesuai tombol yang ditekan
+                switch (key) {
+                    case "0":
+                    case "1":
+                    case "2":
+                    case "3":
+                    case "4":
+                    case "5":
+                    case "6":
+                    case "7":
+                    case "8":
+                    case "9":
+                        // Jika tombol angka, panggil fungsi inputNumber dengan parameter angka yang ditekan
+                        inputNumber(parseInt(key));
+                        break;
+                    case "+":
+                    case "-":
+                    case "*":
+                    case "/":
+                        // Jika tombol operator, panggil fungsi inputOperator dengan parameter operator yang ditekan
+                        inputOperator(key);
+                        break;
+                    case ".":
+                        // Jika tombol titik, panggil fungsi inputDecimal
+                        inputDecimal();
+                        break;
+                    case "=":
+                    case "Enter":
+                        // Jika tombol sama dengan atau enter, panggil fungsi calculate
+                        calculate();
+                        break;
+                    case "c":
+                    case "C":
+                        clearDisplay();
+                    case "Backspace":
+                        // Jika tombol backspace, panggil fungsi deleteLastCharacter
+                        deleteLastCharacter();
+                        break;
+                    case "Delete":
+                        // Jika tombol c, C, backspace, atau delete, panggil fungsi clearDisplay
+                        clearDisplay();
+                        break;
+                    default:
+                        // Jika tombol lain, tidak melakukan apa-apa
+                        break;
+                }
+            });
